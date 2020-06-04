@@ -12,9 +12,9 @@ start_server()
 #navigate to locator site
 rD$navigate("https://www.walgreens.com/storelocator/find.jsp?tab=store+locator&requestType=locator")
 
-
+#find the 99 closest walgreens to given zipcode
 get_walgreens_by_zip = function(zip){
-  #put in downtown chicago zipcode
+  #put in zipcode
   click("#updateLocation")
   enter_text("#detailsPageTextFieldMob", c(zip, key = "enter"))
   click("#closesearchoverlay")
@@ -50,11 +50,14 @@ get_walgreens_by_zip = function(zip){
   return(walgreens_clean)
 }
 
+#extract data for different areas of the Chicago
 north = get_walgreens_by_zip("60625")
 west = get_walgreens_by_zip("60804")
 south = get_walgreens_by_zip("60620")
 
+#Combine and deduplicate
 walgreens = bind_rows(north, west, south) %>%
   unique()
 
+#save csv
 write_csv(walgreens, paste0("data/", Sys.Date(), "-walgreens.csv"))
