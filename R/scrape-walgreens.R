@@ -54,10 +54,16 @@ get_walgreens_by_zip = function(zip){
 north = get_walgreens_by_zip("60625")
 west = get_walgreens_by_zip("60804")
 south = get_walgreens_by_zip("60620")
+central = get_walgreens_by_zip("60601")
+northsub = get_walgreens_by_zip("60026")
+northwestsub = get_walgreens_by_zip("60004")
+westsub = get_walgreens_by_zip("60546")
+southsub = get_walgreens_by_zip("60426")
+southwestsub = get_walgreens_by_zip("60465")
 
 #Combine and deduplicate
-walgreens = bind_rows(north, west, south) %>%
-  unique()
+walgreens = bind_rows(north, west, south, central, northsub, northwestsub, westsub, southsub, southwestsub) %>%
+  unique() 
 
 #save csv
 write_csv(walgreens, paste0("data/", Sys.Date(), "-walgreens.csv"))
