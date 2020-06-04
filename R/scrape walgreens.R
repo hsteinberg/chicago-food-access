@@ -61,3 +61,6 @@ walgreens = bind_rows(north, west, south) %>%
 
 #save csv
 write_csv(walgreens, paste0("data/", Sys.Date(), "-walgreens.csv"))
+
+#end server session
+stop_server()
