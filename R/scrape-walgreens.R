@@ -6,6 +6,9 @@ library(RSelenium)
 #source functions to make rselenium easier
 source_url("https://github.com/hsteinberg/ccdph-functions/blob/master/general-use-rselenium-functions.R?raw=TRUE")
 
+#source general code
+source("R/general.R")
+
 #start firefox session
 start_server()
 
@@ -33,36 +36,33 @@ get_walgreens_by_zip = function(zip){
     address = element$findChildElement(using = "css", ".address-row")$getElementText()
     phone = element$findChildElement(using = "css", ".phone")$getElementText()
     alert = try(element$findChildElement(using = "css", ".alert")$getElementText(), silent = T)
-    out = c("address" = address,"phone" = phone, "alert" = alert)
+    out = c("Address" = address,"Phone" = phone, "Alert" = alert)
     
     return(out)
   }) %>%
     bind_rows()
   
   walgreens_clean = walgreens %>%
-    mutate(alert = gsub("Error .*$","", alert),
-           closed = grepl("closed", alert),
-           pharmacyOnly = grepl("Pharmacy only", alert),
-           address = gsub("\\.", "", address),
-           address = gsub("\\d{1,2} mi", "", address)
+    mutate(Alert = gsub("Error .*$","", Alert),
+           Closed = grepl("closed", Alert),
+           PharmacyOnly = grepl("Pharmacy only", Alert),
+           Name = gsub("\\d.*$", "", Address),
+           Name = ifelse(Name == "", "Walgreens", Name)
+           Address = gsub("\\.", "", Address),
+           Address = gsub("\\d{1,2} mi", "", Address),
+           Address = gsub("\\t", "", Address),
+           Address = gsub("^\\D+(\\d)", "\\1", Address),
+           
+           
     ) 
   
   return(walgreens_clean)
 }
 
 #extract data for different areas of the Chicago
-north = get_walgreens_by_zip("60625")
-west = get_walgreens_by_zip("60804")
-south = get_walgreens_by_zip("60620")
-central = get_walgreens_by_zip("60601")
-northsub = get_walgreens_by_zip("60026")
-northwestsub = get_walgreens_by_zip("60004")
-westsub = get_walgreens_by_zip("60546")
-southsub = get_walgreens_by_zip("60426")
-southwestsub = get_walgreens_by_zip("60465")
-
 #Combine and deduplicate
-walgreens = bind_rows(north, west, south, central, northsub, northwestsub, westsub, southsub, southwestsub) %>%
+walgreens = lapply(cook_zipcodes_sample, get_walgreens_by_zip) %>%
+  bind_rows() %>%
   unique() 
 
 #save csv
