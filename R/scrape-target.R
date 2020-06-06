@@ -1,10 +1,3 @@
-library(tidyverse)
-library(magrittr)
-library(devtools)
-library(RSelenium)
-
-#source functions to make rselenium easier
-source_url("https://github.com/hsteinberg/ccdph-functions/blob/master/general-use-rselenium-functions.R?raw=TRUE")
 
 #source general code
 source("R/general.R")
@@ -36,4 +29,6 @@ targets = lapply(cook_zipcodes_sample, get_target_by_zipcode) %>%
   unique()
 
 write_csv(targets, paste0("data/", Sys.Date(), "-targets.csv"))
+
+stop_server()
 
