@@ -30,9 +30,9 @@ scrape_cvs_by_zip = function(zipcode){
     split = setdiff(split, c("Nearest Open Store","myCVS®Store"))
     split = split[!grepl("STORE|PHARMACY", split)]
     
-    Name = split[4]
-    Phone = split[3]
-    Address = paste0(split[1], ", ", split[2])
+    Name = split[5]
+    Phone = split[4]
+    Address = paste0(split[2], ", ", split[3])
     
     out = c("Name" = Name, "Address" = Address, "Phone" = Phone,
             "Closed" = Closed, "PharmacyClosed" = PharmacyClosed)
@@ -51,6 +51,6 @@ cvss = lapply(cook_zipcodes_sample, scrape_cvs_by_zip) %>%
   rowwise() %>%
   mutate(Name = paste("CVS", Name))
 
-write_csv(targets, paste0("data/", Sys.Date(), "-target.csv"))
+write_csv(cvss, paste0("data/", Sys.Date(), "-cvs.csv"))
 
 stop_server()
