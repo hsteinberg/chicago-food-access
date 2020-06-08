@@ -45,7 +45,7 @@ scrape_cvs_by_zip = function(zipcode){
 }
 
 
-cvss = lapply(cook_zipcodes_sample, scrape_cvs_by_zip) %>%
+cvss = lapply(cook_zipcodes_sample, scrape_cvs_by_zip) %>% #60804 giving error on 6/8- run on cook_zipcodes_sample[-2] if error
   bind_rows() %>%
   unique() %>%
   rowwise() %>%
