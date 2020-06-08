@@ -39,8 +39,9 @@ get_walgreens_by_zip = function(zip){
     mutate(Alert = gsub("Error .*$","", Alert),
            Closed = grepl("closed", Alert),
            PharmacyOnly = grepl("Pharmacy only", Alert),
+           StorePhotoOnly = grepl("Store & photo only", Alert),
            Name = gsub("\\d.*$", "", Address),
-           Name = ifelse(Name == "", "Walgreens", Name)
+           Name = ifelse(Name == "", "Walgreens", Name),
            Address = gsub("\\.", "", Address),
            Address = gsub("\\d{1,2} mi", "", Address),
            Address = gsub("\\t", "", Address),
