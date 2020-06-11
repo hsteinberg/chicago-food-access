@@ -36,7 +36,7 @@ get_dollar_gen_by_zip = function(zipcode){
     return(out)
   }) %>%
     t() %>%
-    as.tibble()
+    as_tibble()
   
   return(df)
   
