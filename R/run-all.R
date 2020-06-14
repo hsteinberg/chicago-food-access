@@ -1,0 +1,5 @@
+source("R/scrape-dollar-general.R")
+source("R/scrape-cvs.R")
+source("R/scrape-target.R")
+source("R/scrape-walgreens.R")
+source("R/scrape-walmart.R")
