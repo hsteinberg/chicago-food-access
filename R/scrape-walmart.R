@@ -37,7 +37,7 @@ if(stop == FALSE){
     as.tibble()
   
   
-  write_csv(walmarts, paste0("data/", Sys.Date(), "-walmart.csv"))
+  write_csv(walmarts, paste0("data/walmart/", Sys.Date(), "-walmart.csv"))
   
   
   

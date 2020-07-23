@@ -60,7 +60,7 @@ walgreens = lapply(cook_zipcodes_sample, get_walgreens_by_zip) %>%
   unique() 
 
 #save csv
-write_csv(walgreens, paste0("data/", Sys.Date(), "-walgreens.csv"))
+write_csv(walgreens, paste0("data/walgreens/", Sys.Date(), "-walgreens.csv"))
 
 #end server session
 stop_server()

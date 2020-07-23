@@ -46,6 +46,6 @@ dollar_gens = lapply(cook_zipcodes_sample, get_dollar_gen_by_zip) %>%
   bind_rows() %>%
   unique()
 
-write_csv(dollar_gens, paste0("data/", Sys.Date(), "-dollar-general.csv"))
+write_csv(dollar_gens, paste0("data/dollar-general/", Sys.Date(), "-dollar-general.csv"))
 
 stop_server()

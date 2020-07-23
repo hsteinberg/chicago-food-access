@@ -28,7 +28,7 @@ targets = lapply(cook_zipcodes_sample, get_target_by_zipcode) %>%
   bind_rows() %>%
   unique()
 
-write_csv(targets, paste0("data/", Sys.Date(), "-target.csv"))
+write_csv(targets, paste0("data/target/", Sys.Date(), "-target.csv"))
 
 stop_server()
 

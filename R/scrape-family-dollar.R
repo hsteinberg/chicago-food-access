@@ -54,7 +54,7 @@ family_dollars = lapply(cook_zipcodes_sample, scrape_family_dollar_by_zip) %>%
 
 
 #save csv
-write_csv(family_dollars, paste0("data/", Sys.Date(), "-family-dollar.csv"))
+write_csv(family_dollars, paste0("data/family-dollar/", Sys.Date(), "-family-dollar.csv"))
 
 #end server session
 stop_server()

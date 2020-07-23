@@ -51,6 +51,6 @@ cvss = lapply(cook_zipcodes_sample[-2], scrape_cvs_by_zip) %>% #60804 giving err
   rowwise() %>%
   mutate(Name = paste("CVS", Name))
 
-write_csv(cvss, paste0("data/", Sys.Date(), "-cvs.csv"))
+write_csv(cvss, paste0("data/cvs/", Sys.Date(), "-cvs.csv"))
 
 stop_server()
