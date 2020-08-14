@@ -14,7 +14,8 @@ scrape_cvs_by_zip = function(zipcode){
   
   enter_text("#search", c(paste0(zipcode, ", IL"), key = "enter"))
   Sys.sleep(2)
-  click(".suggestions > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)")
+  #click(".suggestions > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)")
+  click("#srchstorebtn")
   Sys.sleep(10)
   
   stores = rD$findElements(using = "css", ".searchResult")
