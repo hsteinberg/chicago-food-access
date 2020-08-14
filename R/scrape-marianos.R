@@ -41,10 +41,10 @@ add_marianos = function(table){
 
 #have to click through manually or get kicked off site for scraping
 
-marianos = scrape_marianos()
+marianos = scrape_marianos() #first page
 
 #click through all and add to table
-marianos = add_marianos(marianos)
+marianos = add_marianos(marianos) #other 12 pages (click this after clicking next)
 
 write_csv(marianos, paste0("data/marianos/", Sys.Date(), "-marianos.csv"), na = "")
 
