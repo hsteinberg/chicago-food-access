@@ -28,6 +28,6 @@ aldis = lapply(cook_zipcodes_sample, scrape_aldi_zip) %>%
   bind_rows() %>%
   unique()
 
-write_csv(aldis, paste0("data/aldi/", Sys.Date(), "-aldi.csv"))
+write_csv(aldis, paste0("data/aldi/", Sys.Date(), "-aldi.csv"), na = "")
 
 stop_server()
