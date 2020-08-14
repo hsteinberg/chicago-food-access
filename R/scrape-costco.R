@@ -34,6 +34,6 @@ costcos = lapply(stores, function(x){setdiff(x, "")}) %>%
 
 write_csv(costcos, paste0("data/costco/", Sys.Date(), "-costco.csv"))
 
-
+stop_server()
 
   
