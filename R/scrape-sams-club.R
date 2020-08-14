@@ -4,7 +4,7 @@ source("R/general.R")
 #start firefox session
 start_server()
 
-#go to Dollar General website
+#go to Sams club website
 rD$navigate("https://www.samsclub.com/locator")
 
 #search chicago

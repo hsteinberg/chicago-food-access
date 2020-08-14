@@ -4,7 +4,7 @@ source("R/general.R")
 #start firefox session
 start_server()
 
-#go to Dollar General website
+#go to Costco website
 rD$navigate("https://www.costco.com/warehouse-locations")
 
 #get data
