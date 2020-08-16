@@ -29,7 +29,7 @@ get_dollar_gen_by_zip = function(zipcode){
     split = strsplit(x, "\n")[[1]]
     
     Name = str_extract(x, "Dollar General # \\d+")
-    Address = paste0(split[4], ", ", split[5])
+    Address = paste0(split[5], ", ", split[6])
     Phone = str_extract(x, "\\(\\d{3}\\) \\d{3}-\\d{4}")
     Closed = grepl("Temporarily Closed", x)
     out = c("Name" = Name, "Address" = Address, "Phone" = Phone, "Closed"=Closed)
