@@ -23,6 +23,20 @@ scrape_savealot_by_zip= function(zipcode){
   enter_text("#inputaddress", zipcode)
   
  store_info= get_text_class(".sb-location") 
- 
-  
+
 }
+store_info1= store_info %>%
+strsplit("\\\n") %>%
+do.call("rbind", .) %>%
+  as_tibble() %>%
+set_colnames(c("Miles", "StoreName", "Address1", "Address2", "Hours", "Phone", "b", "c", "v")) %>%
+  mutate(Address = paste(Address1, Address2),
+         Store_Name = gsub("Chicago", "Chicago SaveaLot", StoreName)
+  ) %>%
+  select(Store_Name, Address, Phone)
+
+
+write_csv(store_info1, paste0("data/savealot/", Sys.Date(), "-savealot.csv"), na = "")
+
+stop_server()  
+
