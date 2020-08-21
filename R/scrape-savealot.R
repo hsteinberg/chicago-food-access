@@ -15,12 +15,14 @@ cook_zipcodes_sample = c(north="60625", west="60804",south="60620",
 source("R/general.R")
 stop_server()
 start_server()
-rD$navigate("https://savealot.com/save-lot-grocery-stores-near-me")
+rD$navigate("https://savealot.com/grocery-stores/locationfinder/")
+
+
 scrape_savealot_by_zip= function(zipcode){
   
   enter_text("#inputaddress", zipcode)
   
- store_info= get_text_class(".sb-location", selectorType="css") 
+ store_info= get_text_class(".sb-location") 
  
   
 }
