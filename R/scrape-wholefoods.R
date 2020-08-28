@@ -41,7 +41,7 @@ WF= WFinfo %>%
 
 #try this
 WF= WFinfo %>%
-  gsub("Closed", "Closed\\\nNA", .) %>%
+  gsub("Closed", "Closed\\\nNA", .) %>% #adding in a line that says NA where hours would be if open
   strsplit("\\\n") %>%
   do.call("rbind", .) %>%
   as_tibble()  
