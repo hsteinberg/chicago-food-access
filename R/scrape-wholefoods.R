@@ -25,6 +25,8 @@ scrape_WF_by_zip= function(zipcode){
   click("#sf-search-icon")
   
   storeinfo= get_text_class("wfm-store-details") #This is getting me a list of 0?? idk -HS
+  storeinfo = get_text_class("w-store-finder-core-info") #this does work though
+  
   
   #But this is getting me names and addresses for every store -HS
   names = get_text_class("w-store-finder-store-name")
@@ -33,6 +35,13 @@ scrape_WF_by_zip= function(zipcode){
 
 WFinfo= storeinfo
 WF= WFinfo %>%
+  strsplit("\\\n") %>%
+  do.call("rbind", .) %>%
+  as_tibble()  
+
+#try this
+WF= WFinfo %>%
+  gsub("Closed", "Closed\\\nNA", .) %>%
   strsplit("\\\n") %>%
   do.call("rbind", .) %>%
   as_tibble()  
