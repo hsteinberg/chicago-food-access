@@ -24,7 +24,11 @@ scrape_WF_by_zip= function(zipcode){
   enter_text("#store-finder-search-bar",zipcode)
   click("#sf-search-icon")
   
-  storeinfo= get_text_class("wfm-store-details")
+  storeinfo= get_text_class("wfm-store-details") #This is getting me a list of 0?? idk -HS
+  
+  #But this is getting me names and addresses for every store -HS
+  names = get_text_class("w-store-finder-store-name")
+  addresses = get_text_class("storeAddress") %>% gsub("\\\n", ", ", .)
 }
 
 WFinfo= storeinfo
