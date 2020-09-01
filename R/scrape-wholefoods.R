@@ -1,3 +1,4 @@
+#packages needed
 library(tidyverse)
 library(magrittr)
 library(devtools)
@@ -13,6 +14,7 @@ cook_zipcodes_sample = c(north="60625", west="60804",south="60620",
                          westsub="60546",southsub="60426",southwestsub="60465")
 source("R/general.R")
 stop_server()
+#navigate to Whole Foods Website
 start_server()
 
 rD$navigate("https://www.wholefoodsmarket.com/stores")
@@ -23,17 +25,10 @@ scrape_WF_by_zip= function(zipcode){
   
   enter_text("#store-finder-search-bar",zipcode)
   click("#sf-search-icon")}
-  
+  #get all of store info at once
   storeinfo = get_text_class("w-store-finder-core-info") 
-  
-  
-  #But this is getting me names and addresses for every store -HS
- # names = get_text_class("w-store-finder-store-name")
-  #addresses = get_text_class("storeAddress") %>% gsub("\\\n", ", ", .)
-
-
-
-#try this
+ 
+#Clean up store info by separating into columns, naming columns, and selecting relevant info
 WF= storeinfo %>%
   gsub("Closed", "Closed\\\nNA", .) %>% #adding in a line that says NA where hours would be if open
     strsplit("\\\n") %>%
@@ -47,7 +42,7 @@ set_colnames(c("StoreName", "Miles", "Extra", "Status", "Hours", "Address1", "Ad
     select(Store_Name, Address, Status)
 
 #save completed table
-write_csv(WF, paste0("data/wholefoods/", Sys.Date(), "-wholefoods.csv"), na = "")
+write_csv(WF, paste0("data/whole-foods/", Sys.Date(), "-wholefoods.csv"), na = "")
 
 stop_server() 
 
