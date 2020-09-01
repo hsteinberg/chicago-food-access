@@ -22,83 +22,33 @@ rD$navigate("https://www.wholefoodsmarket.com/stores")
 scrape_WF_by_zip= function(zipcode){
   
   enter_text("#store-finder-search-bar",zipcode)
-  click("#sf-search-icon")
+  click("#sf-search-icon")}
   
-  storeinfo= get_text_class("wfm-store-details") #This is getting me a list of 0?? idk -HS
-  storeinfo = get_text_class("w-store-finder-core-info") #this does work though
+  storeinfo = get_text_class("w-store-finder-core-info") 
   
   
   #But this is getting me names and addresses for every store -HS
-  names = get_text_class("w-store-finder-store-name")
-  addresses = get_text_class("storeAddress") %>% gsub("\\\n", ", ", .)
-}
+ # names = get_text_class("w-store-finder-store-name")
+  #addresses = get_text_class("storeAddress") %>% gsub("\\\n", ", ", .)
 
-WFinfo= storeinfo
-WF= WFinfo %>%
-  strsplit("\\\n") %>%
-  do.call("rbind", .) %>%
-  as_tibble()  
+
 
 #try this
-WF= WFinfo %>%
-  gsub("Closed", "Closed\\\nNA", .) %>% #adding in a line that says NA where hours would be if open
-  strsplit("\\\n") %>%
-  do.call("rbind", .) %>%
-  as_tibble()  
-
-
-#ignore everything below this line; was stuff I was trying out 
-
-
-
-storeinfo = rD$findElements(using = "css", "wfm-store-details")
-store_text = sapply(names, function(x){
-  return(x$getElementText())
-  
-})
-
-WF= strsplit(storeinfo, "\n")
 WF= storeinfo %>%
-  strsplit("\\\n") %>%
-  do.call("rbind", .) %>%
-  as_tibble()  
-
-store_info1= store_info %>%
-  strsplit("\\\n") %>%
-  do.call("rbind", .) %>%
-  as_tibble() 
-
-data = rD$findElement(using = "css", "wfm-store-details")$getElementText()[[1]] 
-WF= str_split(store_text, "\n")
-
-
-wfm-store-list.hydrated > ul:nth-child(1) > li:nth-child(1) > wfm-store-details:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)
-data = rD$findElement(using = "css", "wfm-store-list.hydrated")$getElementText()[[1]] 
-stores = strsplit(data, "\n")[[1]]
-
-  
- 
-  store_info= stores %>%
+  gsub("Closed", "Closed\\\nNA", .) %>% #adding in a line that says NA where hours would be if open
     strsplit("\\\n") %>%
-    do.call("rbind", .) %>%
-    as_tibble()
-
-
-  
-
-
-  
- 
-  
-  #scrape store names
-  names = rD$findElements(using = "css", ".store-name")
-  names_text = sapply(names, function(x){
-    return(x$getElementText())
-    
-  })
-store_info1= store_info %>%
-  strsplit("\\\n") %>%
   do.call("rbind", .) %>%
   as_tibble() %>%
-  set_colnames(c("Miles", "StoreName", "Address1", "Address2", "Hours", "Phone", "b", "c", "v")) %>%
-  
+set_colnames(c("StoreName", "Miles", "Extra", "Status", "Hours", "Address1", "Address2", "Location2"))%>%
+     mutate(Address3 = paste(Address1, Address2),
+          Address = gsub("Opens 8:00 am tomorrow 832 W 63rd St", "832 W 63rd St Chicago, IL 60621", Address3),
+          Store_Name= paste0("Whole Foods ",StoreName)  
+  ) %>%
+    select(Store_Name, Address, Status)
+
+#save completed table
+write_csv(WF, paste0("data/wholefoods/", Sys.Date(), "-wholefoods.csv"), na = "")
+
+stop_server() 
+
+
