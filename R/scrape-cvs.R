@@ -31,9 +31,9 @@ scrape_cvs_by_zip = function(zipcode){
     split = setdiff(split, c("Nearest Open Store","myCVS®Store"))
     split = split[!grepl("STORE|PHARMACY", split)]
     
-    Name = split[5]
-    Phone = split[4]
-    Address = paste0(split[2], ", ", split[3])
+    Name = split[6]
+    Phone = split[5]
+    Address = paste0(split[3], ", ", split[4])
     
     out = c("Name" = Name, "Address" = Address, "Phone" = Phone,
             "Closed" = Closed, "PharmacyClosed" = PharmacyClosed)
