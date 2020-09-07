@@ -21,11 +21,11 @@ rD$navigate("https://savealot.com/grocery-stores/locationfinder/")
 
 scrape_savealot_by_zip= function(zipcode){
   
-  enter_text("#inputaddress", zipcode)
+  enter_text("#inputaddress", zipcode)}
   
  store_info= get_text_class(".sb-location") 
 
-}
+
 
 #Clean data so only relevant info and columns remain
 store_info1= store_info %>%
@@ -37,9 +37,10 @@ set_colnames(c("Miles", "StoreName", "Address1", "Address2", "Hours", "Phone", "
          Store_Name = gsub("Chicago", "Chicago SaveaLot", StoreName)
   ) %>%
   select(Store_Name, Address, Phone)
-
+#remove out of state
+savealot <- store_info1[-c(9, 10, 13, 14, 15, 16, 17, 18, 19, 20), ]
 #save completed table
-write_csv(store_info1, paste0("data/savealot/", Sys.Date(), "-savealot.csv"), na = "")
+write_csv(savealot, paste0("data/savealot/", Sys.Date(), "-savealot.csv"), na = "")
 
 stop_server()  
 
