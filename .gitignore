@@ -5,6 +5,7 @@
 *.DS_Store
 *.Rproj
 *hours.xlsx
-invoice*
+*voice*
 scrape-google.R
 .gitignore
+fw9*
